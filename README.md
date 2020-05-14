@@ -18,8 +18,6 @@ Illustration of **Frame-Stewart algorihm** for solving the **multi-peg Hanoi Tow
 
 ![](10_6.gif)
 
-<img src="https://latex.codecogs.com/svg.latex?&space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" title="x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" />
-
 
 Frame-Stewart's algorithm solves the <img src="https://latex.codecogs.com/svg.latex?&space;p"/>-peg <img src="https://latex.codecogs.com/svg.latex?n"/>-disc from source to destination as follows:
 
