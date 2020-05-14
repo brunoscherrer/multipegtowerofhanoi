@@ -38,4 +38,3 @@ A reasonable approximation is <img src="https://latex.codecogs.com/svg.latex?\ha
 **References:**<br>
 Sandi Klavžar, Uroš Milutinović, Ciril Petr. *On the Frame–Stewart algorithm for the multi-peg Tower of Hanoi problem.* Discrete Applied Mathematics. Volume 120, Issues 1–3, 15 August 2002, Pages 141-157.<br>
 Thierry Bousch. *La quatrième tour de Hanoï.* Bull. Belg. Math. Soc. Simon Stevin Volume 21, Number 5 (2014), 895-912.<br>
-Janez Zerovnik. *Self Similarities of the Tower of Hanoi Graphs and a proof of the Frame-Stewart Conjecture.* arXiv.
