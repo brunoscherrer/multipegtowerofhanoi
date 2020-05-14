@@ -19,9 +19,9 @@ Illustration of **Frame-Stewart algorihm** for solving the **multi-peg Hanoi Tow
 ![](10_6.gif)
 
 
-Frame-Stewart's algorithm solves the <img src="https://latex.codecogs.com/svg.latex?&space;p"/>-peg <img src="https://latex.codecogs.com/svg.latex?n"/>-disc from source to destination as follows:
+Frame-Stewart's algorithm solves the p-peg n-disc from source to destination as follows:
 
-- choose a height <img src="https://latex.codecogs.com/svg.latex?h \in {1,\dots,n-1}"/> (see below) ;
+- choose a height <img src="https://latex.codecogs.com/svg.latex?h\in{1,\dots,n-1}"/> (see below) ;
 - move the <img src="https://latex.codecogs.com/svg.latex?(n-h)"/>-high upper part of the tower to any peg different from source and destination, say number peg <img src="https://latex.codecogs.com/svg.latex?i"/> ;
 - move the <img src="https://latex.codecogs.com/svg.latex?h"/>-high lower part from source to destination using all pegs except <img src="https://latex.codecogs.com/svg.latex?i"/> ;
 - move the <img src="https://latex.codecogs.com/svg.latex?(n-h)"/> from <img src="https://latex.codecogs.com/svg.latex?i"/> to destination.
