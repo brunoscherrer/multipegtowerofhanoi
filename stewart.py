@@ -143,8 +143,8 @@ for p in range(3,7):
     m = [ S[i][1] for i in rln ]
     plt.figure(figsize=(12,8))
     plt.title("$S(n,%d)$ and $h(n,%d)$ as a function of $n$"%(p,p))
-    plt.xlabel("$S(n,%d)$"%p)
-    plt.ylabel("$n$")
+    plt.ylabel("$S(n,%d)$"%p)
+    plt.xlabel("$n$")
     plt.plot( nrange, y,'o' )
     plt.yscale('log')
     i=0
