@@ -1,69 +1,99 @@
-# Multi-peg Tower of Hanoi
+<p><html>
+<head></p>
 
-We consider **Stewart's algorihm** for solving the **multi-peg Hanoi Tower problem**.
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
 
-## Algorithm
+<p></head> 
+<body></p>
 
-Stewart's algorithm solves the p-peg n-disc from source to destination as follows:
+<h1>Multi-peg Tower of Hanoi</h1>
 
-- choose a height <img src="https://latex.codecogs.com/svg.latex?h\in\left\{1,\dots,n-1\right\}"/> (see below) ;
-- move the <img src="https://latex.codecogs.com/svg.latex?(n-h)"/>-high upper part of the tower to any peg different from source and destination, say number peg <img src="https://latex.codecogs.com/svg.latex?i"/> ;
-- move the <img src="https://latex.codecogs.com/svg.latex?h"/>-high lower part from source to destination using all pegs except <img src="https://latex.codecogs.com/svg.latex?i"/> ;
-- move the <img src="https://latex.codecogs.com/svg.latex?(n-h)"/> from <img src="https://latex.codecogs.com/svg.latex?i"/> to destination.
+<p>We consider <strong>Stewart's algorihm</strong> for solving the <strong>multi-peg Hanoi Tower problem</strong>.</p>
 
-See [below](#anim) for an illustration of this algorithm for n=10 discs.
+<h2>Algorithm</h2>
 
-## Quick analysis
+<p>Stewart's algorithm solves the p-peg n-disc from source to destination as follows:</p>
 
-The number of steps <img src="https://latex.codecogs.com/svg.latex?S(n,p)"/> to solve the p-peg n-disc problem satisfies the recurrence relation:
+<ul>
+<li>choose a height \(h\in\left\{1,\dots,n-1\right\}\) (see below) ;</li>
+<li>move the \((n-h)\)-high upper part of the tower to any peg different from source and destination, say number peg \(i\) ;</li>
+<li>move the \(h\)-high lower part from source to destination using all pegs except \(i\) ;</li>
+<li>move the \((n-h)\) from \(i\) to destination.</li>
+</ul>
 
-<img src="https://latex.codecogs.com/svg.latex?\forall{}p\ge{}3,{}\forall{}n,{}S(n,p)=\min_{1\le{}h\le{}n-1}2S(n-h,p)+S(h,p-1),"/>
+<p>See <a href="#anim">below</a> for an illustration of this algorithm for n=10 discs.</p>
 
-with <img src="https://latex.codecogs.com/svg.latex?S(1,2)=1"/> and <img src="https://latex.codecogs.com/svg.latex?S(n,2)=\infty"/> for all <img src="https://latex.codecogs.com/svg.latex?n\ge{}2"/>.
+<h2>Quick analysis</h2>
 
-For any <img src="https://latex.codecogs.com/svg.latex?(n,p)"/>, an optimal choice <img src="https://latex.codecogs.com/svg.latex?h(n,p)"/> is any that reaches the minimum above. 
-A reasonable approximation is <img src="https://latex.codecogs.com/svg.latex?\hat{h}(n,p)=n^r"/> with <img src="https://latex.codecogs.com/svg.latex?r=\frac{p-4}{p-3}"/>, and the optimal number of steps is <img src="https://latex.codecogs.com/svg.latex?O\left(2^{n^r+o(n^r)}\right)"/>.
+<p>The number of steps \(S(n,p)\) to solve the p-peg n-disc problem satisfies the recurrence relation:</p>
 
-Here are illustrations of the optimal values and the set of minimizers:
+<p>\(\forall{}p\ge{}3,{}\forall{}n,{}S(n,p)=\min_{1\le{}h\le{}n-1}2S(n-h,p)+S(h,p-1),\) <br>
+with \(S(1,2)=1\) and \(S(n,2)=\infty\) for all \(n\ge{}2.\)</p>
 
-- p=3
+<p>For any \((n,p)\), an optimal choice is any element of the argmin set \(h(n,p)\).</p>
 
-![](S_h_3.png)
+<p>Here are illustrations of the optimal values and the set and the number of minimizers:</p>
 
-- p=4
+<ul>
+<li>p=3</li>
+</ul>
 
-![](S_h_4.png)
+<p><img src="S_h_3.png" alt="" title="" /></p>
 
-- p=5
+<ul>
+<li>p=4</li>
+</ul>
 
-![](S_h_5.png)
+<p><img src="S_h_4.png" alt="" title="" /></p>
 
-- p=6
+<ul>
+<li>p=5</li>
+</ul>
 
-![](S_h_6.png)
+<p><img src="S_h_5.png" alt="" title="" /></p>
 
-These graphs suggest that there are many optimal paths.
+<ul>
+<li>p=6</li>
+</ul>
 
+<p><img src="S_h_6.png" alt="" title="" /></p>
 
-## Graphical illustration of the algorithm <a name="anim"></a>
+<p>These graphs suggest that there are many paths. In fact, the number of paths $N(n,p)$ can be seen to satisfy the following recurrence:</p>
 
-- 3 pegs:
+<p>\(N(n,p) = \sum_{h \in h(n,p)} N(h,p)+N(n-h,p-1),\) <br>
+with \(N(n,p)=1\) if \( n &lt; p \) or \( p=3 \).</p>
 
-![](10_3.gif)
+<h2>Graphical illustration of the algorithm <a name="anim"></a></h2>
 
-- 4 pegs:
+<ul>
+<li>3 pegs:</li>
+</ul>
 
-![](10_4.gif)
+<p><img src="10_3.gif" alt="" title="" /></p>
 
-- 5 pegs:
+<ul>
+<li>4 pegs:</li>
+</ul>
 
-![](10_5.gif)
+<p><img src="10_4.gif" alt="" title="" /></p>
 
-- 6 pegs:
+<ul>
+<li>5 pegs:</li>
+</ul>
 
-![](10_6.gif)
+<p><img src="10_5.gif" alt="" title="" /></p>
 
-## References
+<ul>
+<li>6 pegs:</li>
+</ul>
 
-Sandi Klavžar, Uroš Milutinović, Ciril Petr. *On the Frame–Stewart algorithm for the multi-peg Tower of Hanoi problem.* Discrete Applied Mathematics. Volume 120, Issues 1–3, 15 August 2002, Pages 141-157.<br>
-Thierry Bousch. *La quatrième tour de Hanoï.* Bull. Belg. Math. Soc. Simon Stevin Volume 21, Number 5 (2014), 895-912.<br>
+<p><img src="10_6.gif" alt="" title="" /></p>
+
+<h2>References</h2>
+
+<p>Sandi Klavžar, Uroš Milutinović, Ciril Petr. <em>On the Frame–Stewart algorithm for the multi-peg Tower of Hanoi problem.</em> Discrete Applied Mathematics. Volume 120, Issues 1–3, 15 August 2002, Pages 141-157.<br>
+Thierry Bousch. <em>La quatrième tour de Hanoï.</em> Bull. Belg. Math. Soc. Simon Stevin Volume 21, Number 5 (2014), 895-912.<br></p>
+
+<p></body>
+</html></p>

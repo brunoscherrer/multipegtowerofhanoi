@@ -26,7 +26,7 @@ def argmin_set(l): # tous les minima
 
 def S_optcut(n,p):
     if n<p:
-        S_mem[(n,p)] = 2*n-1, None
+        S_mem[(n,p)] = 2*n-1, [1]
         return S_mem[(n,p)]
     if p==3:
         S_mem[(n,p)] = 2*S_optcut(n-1,p)[0]+1, [n-1]
@@ -38,6 +38,23 @@ def S_optcut(n,p):
     m = argmin_set(S)
     S_mem[(n,p)] = S[m[-1]], [i+1 for i in m]
     return S_mem[(n,p)]
+
+
+nb_chemins_mem = dict()
+
+def nb_chemins(n,p):
+    if n<p or p==3:
+        nb_chemins_mem[(n,p)]=1
+        return 1
+    if (n,p) in nb_chemins_mem:
+        return nb_chemins_mem[(n,p)]
+    lm = S_optcut(n,p)[1]
+    nb_chemins_mem[(n,p)] = sum([ nb_chemins(m,p) + nb_chemins(n-m,p-1)   for m in lm ])
+    return nb_chemins_mem[(n,p)]
+
+
+###############################
+# Stewart's algorithm
 
 def move( etat, src, dest ):
     etat[dest].append( etat[src].pop() ) # on enlève le disque de src et on le met sur dest
@@ -73,10 +90,10 @@ def go(n=3,p=3, strat=None):
     etat = [ list(range(n,0,-1)) ] + [ [] for i in range(p-1) ]
     deplacements = [ deepcopy(etat) ]
     
-    if strat==None: # optimal
+    if strat==None: # => optimal
         S,_ = S_optcut(n,p)
-        #print("Nb de coups:",S)
-        #print("Stratégie:",S_mem)
+        print("Nb de coups:",S)
+        print("Stratégie:",S_mem)
         strat = lambda a,b: S_mem[(a,b)][1]
     
     hanoi( etat, n,   0,  p-1,   list(range(1,p-1) ), strat )
@@ -133,29 +150,51 @@ def plot_etat(fig, n, p, etat):
 
 # Génération des courbes
 
-nrange = range(3,30)
+nrange = range(3,100)
 rln = range(len(nrange))
-for p in range(3,7):
-    S = [ S_optcut(n,p) for n in nrange ]
-    print(len(S),len(nrange))
-    y = [ S[i][0] for i in rln ]
-    print(y)
-    m = [ S[i][1] for i in rln ]
-    plt.figure(figsize=(12,8))
-    plt.title("$S(n,%d)$ and $h(n,%d)$ as a function of $n$"%(p,p))
+for p in range(3,10):
+    print(p)
+
+    fig = plt.figure(figsize=(18,5))
+    
+    # valeur optimale et choix possibles
+    ax = fig.add_subplot(131)
+    plt.title("$S(n,%d)$ as a function of $n$"%p)
     plt.ylabel("$S(n,%d)$"%p)
     plt.xlabel("$n$")
-    plt.plot( nrange, y,'o' )
+    plt.plot( nrange, [ S_optcut(n,p)[0] for n in nrange ] )
     plt.yscale('log')
-    i=0
-    for n in nrange:
-        if S[i][1]!=None:
-            plt.text(n, S[i][0], S[i][1],ha='right' )
-        i+=1
-    plt.savefig("S_h_%d.png"%p)
+    plt.grid(which='both')
+
+    # taille de l'ensemble argmin
+    ax = fig.add_subplot(132)
+    plt.title("Size $|h(n,%d)|$ of the argmin set as a function of $n$"%p)
+    plt.ylabel("$|h(n,%d)|$"%p)
+    plt.xlabel("$n$")
+    plt.plot( nrange, [ len(S_optcut(n,p)[1]) for n in nrange ] )
+    if p>3:
+        plt.plot( nrange, [1 for x in nrange], "--", label='1')
+        #plt.plot( nrange, [pow(x,(p-4)/(p-3)) for x in nrange], "--", label='xx')
+    plt.grid(which='both')
+    
+    # nb de chemins
+    ax = fig.add_subplot(133)
+    plt.title("Number of paths N(n,%d) as a function of $n$"%p)
+    plt.xlabel("$n$")
+    plt.plot( nrange, [nb_chemins(n,p) for n in nrange ])
+    plt.yscale('log')
+    plt.grid(which='both')
+    
+    plt.savefig("p=%d.png"%p)
+
+    plt.tight_layout()
     plt.close()
 
+exit(1)
 
+    
+# Génération de l'animation
+    
 def genere_anim(n,p):
 
     go(n,p)
