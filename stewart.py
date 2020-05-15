@@ -29,7 +29,7 @@ def S_optcut(n,p):
         S_mem[(n,p)] = 2*n-1, None
         return S_mem[(n,p)]
     if p==3:
-        S_mem[(n,p)] = 2*S_optcut(n-1,p)[0]+1, n-1
+        S_mem[(n,p)] = 2*S_optcut(n-1,p)[0]+1, [n-1]
         return S_mem[(n,p)]
     if (n,p) in S_mem:
         return S_mem[(n,p)]
@@ -59,7 +59,7 @@ def hanoi( etat, n, src, dest, libres, strategie, niv=0 ):
         for i in range(n-2,-1,-1):
             move(etat, libres[i], dest)
     else:
-        m = strategie(n,p)
+        m = strategie(n,p)[-1]
         hanoi( etat, m, src, libres[0], [dest] + libres[1:], strategie, niv+1 )
         hanoi( etat, n-m,  src, dest,  libres[1:], strategie, niv+1 )
         hanoi( etat, m, libres[0], dest, [src] + libres[1:], strategie, niv+1 )
