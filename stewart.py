@@ -12,7 +12,7 @@ import os
 
 DEBUG=False
 
-S_mem = dict()
+S_mem = dict() # hash memory of the values
 
 # score optimal et coupe optimale 
 
@@ -35,8 +35,8 @@ def S_optcut(n,p):
         return S_mem[(n,p)]
     S = ([ 2*S_optcut(m,p)[0] + S_optcut(n-m,p-1)[0] for m in range(1,n) ])
     if DEBUG: print(S, list(range(1,n)))
-    m = argmin_set(S)[-1]
-    S_mem[(n,p)] = S[m], m+1
+    m = argmin_set(S)
+    S_mem[(n,p)] = S[m[-1]], [i+1 for i in m]
     return S_mem[(n,p)]
 
 def move( etat, src, dest ):
@@ -80,7 +80,9 @@ def go(n=3,p=3, strat=None):
         strat = lambda a,b: S_mem[(a,b)][1]
     
     hanoi( etat, n,   0,  p-1,   list(range(1,p-1) ), strat )
-    
+
+
+##############################
 # représentation graphique
 
 def plot_etat(fig, n, p, etat):
@@ -125,7 +127,34 @@ def plot_etat(fig, n, p, etat):
     plt.tight_layout()
 
 
+####################################################
 ### Main
+
+
+# Génération des courbes
+
+nrange = range(3,30)
+rln = range(len(nrange))
+for p in range(3,7):
+    S = [ S_optcut(n,p) for n in nrange ]
+    print(len(S),len(nrange))
+    y = [ S[i][0] for i in rln ]
+    print(y)
+    m = [ S[i][1] for i in rln ]
+    plt.figure(figsize=(12,8))
+    plt.title("$S(n,%d)$ and $h(n,%d)$ as a function of $n$"%(p,p))
+    plt.xlabel("$S(n,%d)$"%p)
+    plt.ylabel("$n$")
+    plt.plot( nrange, y,'o' )
+    plt.yscale('log')
+    i=0
+    for n in nrange:
+        if S[i][1]!=None:
+            plt.text(n, S[i][0], S[i][1],ha='right' )
+        i+=1
+    plt.savefig("S_h_%d.png"%p)
+    plt.close()
+
 
 def genere_anim(n,p):
 
@@ -149,4 +178,6 @@ def genere_anim(n,p):
 
 for p in range(3,7):
     genere_anim(10,p)
+
+
 
