@@ -150,7 +150,7 @@ def plot_etat(fig, n, p, etat):
 
 # Génération des courbes
 
-nrange = range(3,100)
+nrange = range(3,40)
 rln = range(len(nrange))
 for p in range(3,10):
     print(p)
@@ -168,13 +168,16 @@ for p in range(3,10):
 
     # taille de l'ensemble argmin
     ax = fig.add_subplot(132)
-    plt.title("Size $|h(n,%d)|$ of the argmin set as a function of $n$"%p)
+    plt.title("Argmin set $h(n,%d)$ as a function of $n$"%p)
     plt.ylabel("$|h(n,%d)|$"%p)
     plt.xlabel("$n$")
-    plt.plot( nrange, [ len(S_optcut(n,p)[1]) for n in nrange ] )
-    if p>3:
-        plt.plot( nrange, [1 for x in nrange], "--", label='1')
-        #plt.plot( nrange, [pow(x,(p-4)/(p-3)) for x in nrange], "--", label='xx')
+    for n in nrange:
+        plt.plot( [n,n],  [ S_optcut(n,p)[1][0], S_optcut(n,p)[1][-1] ], color='black')
+    plt.plot( nrange, [ S_optcut(n,p)[1][0]  for n in nrange ], '--', color='grey' )
+    plt.plot( nrange, [ S_optcut(n,p)[1][-1]  for n in nrange ], '--', color='grey' )
+    # if p>3:
+    #    plt.plot( nrange, [1 for x in nrange], "--", label='1')
+    #plt.plot( nrange, [pow(x,(p-4)/(p-3)) for x in nrange], "--", label='xx')
     plt.grid(which='both')
     
     # nb de chemins
