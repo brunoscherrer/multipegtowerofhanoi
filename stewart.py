@@ -49,7 +49,7 @@ def nb_chemins(n,p):
     if (n,p) in nb_chemins_mem:
         return nb_chemins_mem[(n,p)]
     lm = S_optcut(n,p)[1]
-    nb_chemins_mem[(n,p)] = sum([ nb_chemins(m,p) + nb_chemins(n-m,p-1)   for m in lm ])
+    nb_chemins_mem[(n,p)] = sum([ nb_chemins(m,p) * nb_chemins(n-m,p-1) ** 2   for m in lm ])
     return nb_chemins_mem[(n,p)]
 
 
@@ -150,10 +150,12 @@ def plot_etat(fig, n, p, etat):
 
 # Génération des courbes
 
-nrange = range(3,40)
-rln = range(len(nrange))
-for p in range(3,10):
-    print(p)
+for p in range(3,9):
+
+    nrange = range(3,2*p*p)
+    rln = range(len(nrange))
+    
+    print(p, rln)
 
     fig = plt.figure(figsize=(18,5))
     
